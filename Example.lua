@@ -1,285 +1,133 @@
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/StarMoon-SL/Diamond/refs/heads/main/Library.Luau"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/StarMoon-SL/Diamond/refs/heads/main/Library.lua"))()
 local Icons = loadstring(game:HttpGet("https://raw.githubusercontent.com/StarMoon-SL/Diamond/refs/heads/main/Loader.lua"))()
-
 local Window = Library:Window({
-    Name = "Diamond Hub",
-    SubName = "Premium Edition",
-    Logo = Icons.nebulaIcons.nebula
+    Name = "Example Window",
+    SubName = "Demonstration of all elements",
+    Logo = "120959262762131"
 })
 
-local KeybindList = Library:KeybindList("Active Keybinds")
+local Page1 = Window:Page({
+    Name = "Basics",
+    Icon = "home"
+})
 
-Window:Category("Main")
-local MainPage = Window:Page({Name = "Main", Icon = Icons:GetIcon("home", "Material")})
-
-Window:Category("Combat")
-local CombatPage = Window:Page({Name = "Combat", Icon = Icons:GetIcon("swords", "Symbols")})
-
-Window:Category("Visuals")
-local VisualsPage = Window:Page({Name = "Visuals", Icon = Icons:GetIcon("eye", "Phosphor")})
-
-Window:Category("Settings")
-local SettingsPage = Library:CreateSettingsPage(Window, KeybindList)
-
-local MainSection = MainPage:Section({
-    Name = "Character",
-    Description = "Character modifications",
-    Icon = Icons:GetIcon("person", "Material"),
+local Section1 = Page1:Section({
+    Name = "Controls",
+    Description = "Toggle, Slider, Dropdown",
     Side = 1
 })
 
-MainSection:Toggle({
-    Name = "Enable Speed",
-    Flag = "SpeedEnabled",
-    Default = false,
+Section1:Toggle({
+    Name = "Enable Feature",
+    Flag = "ExampleToggle",
+    Default = true,
     Callback = function(Value)
-        print("Speed:", Value)
+        print("Toggle changed to:", Value)
     end
 })
 
-local SpeedSettings = MainSection:Toggle({
-    Name = "Speed Hack",
-    Flag = "SpeedHack",
-    Default = false,
-    Callback = function(Value)
-        print("Speed Hack:", Value)
-    end
-}):Settings(200)
-
-SpeedSettings:Slider({
-    Name = "Speed Amount",
-    Flag = "SpeedAmount",
-    Min = 16,
+Section1:Slider({
+    Name = "Volume",
+    Flag = "ExampleSlider",
+    Min = 0,
     Max = 100,
     Default = 50,
+    Suffix = "%",
     Decimals = 0,
-    Suffix = " studs",
     Callback = function(Value)
-        print("Speed:", Value)
+        print("Slider value:", Value)
     end
 })
 
-SpeedSettings:Keybind({
-    Name = "Speed Key",
-    Flag = "SpeedKey",
-    Default = Enum.KeyCode.LeftShift,
-    Mode = "Hold",
+Section1:Dropdown({
+    Name = "Select Option",
+    Flag = "ExampleDropdown",
+    Items = {"Option A", "Option B", "Option C"},
+    Default = "Option B",
     Callback = function(Value)
-        print("Speed Key:", Value)
+        print("Dropdown selected:", Value)
     end
 })
 
-MainSection:Slider({
-    Name = "Jump Power",
-    Flag = "JumpPower",
-    Min = 50,
-    Max = 200,
-    Default = 50,
-    Decimals = 0,
-    Suffix = " power",
-    Callback = function(Value)
-        print("Jump:", Value)
-    end
-})
-
-MainSection:Dropdown({
-    Name = "Fly Mode",
-    Flag = "FlyMode",
-    Items = {"Default", "Fast", "Slow", "NoClip"},
-    Default = "Default",
-    Multi = false,
-    Callback = function(Value)
-        print("Fly Mode:", Value)
-    end
-})
-
-MainSection:Keybind({
-    Name = "Fly Key",
-    Flag = "FlyKey",
-    Default = Enum.KeyCode.F,
+Section1:Keybind({
+    Name = "Activate Shortcut",
+    Flag = "ExampleKeybind",
+    Default = Enum.KeyCode.R,
     Mode = "Toggle",
-    Callback = function(Value)
-        print("Flying:", Value)
+    Callback = function(State)
+        print("Keybind state:", State)
     end
 })
 
-local CombatSection = CombatPage:Section({
-    Name = "Aimbot",
-    Description = "Aiming assistance",
-    Icon = Icons:GetIcon("target", "Phosphor"),
-    Side = 1
-})
-
-CombatSection:Toggle({
-    Name = "Enable Aimbot",
-    Flag = "AimbotEnabled",
-    Default = false,
-    Callback = function(Value)
-        print("Aimbot:", Value)
-    end
-})
-
-CombatSection:Toggle({
-    Name = "Silent Aim",
-    Flag = "SilentAim",
-    Default = false,
-    Callback = function(Value)
-        print("Silent Aim:", Value)
-    end
-})
-
-CombatSection:Slider({
-    Name = "Aim FOV",
-    Flag = "AimFOV",
-    Min = 10,
-    Max = 360,
-    Default = 90,
-    Decimals = 0,
-    Suffix = "°",
-    Callback = function(Value)
-        print("FOV:", Value)
-    end
-})
-
-CombatSection:Dropdown({
-    Name = "Aim Part",
-    Flag = "AimPart",
-    Items = {"Head", "Torso", "HumanoidRootPart", "LeftArm", "RightArm"},
-    Default = "Head",
-    Multi = false,
-    Callback = function(Value)
-        print("Aiming at:", Value)
-    end
-})
-
-CombatSection:Keybind({
-    Name = "Aim Key",
-    Flag = "AimKey",
-    Default = Enum.KeyCode.Q,
-    Mode = "Hold",
-    Callback = function(Value)
-        print("Aiming:", Value)
-    end
-})
-
-local VisualSection = VisualsPage:Section({
-    Name = "ESP",
-    Description = "Extra sensory perception",
-    Icon = Icons:GetIcon("eye", "Phosphor"),
-    Side = 1
-})
-
-VisualSection:Toggle({
-    Name = "Enable ESP",
-    Flag = "ESPEnabled",
-    Default = true,
-    Callback = function(Value)
-        print("ESP:", Value)
-    end
-})
-
-VisualSection:Toggle({
-    Name = "Show Boxes",
-    Flag = "ShowBoxes",
-    Default = true,
-    Callback = function(Value)
-        print("Boxes:", Value)
-    end
-})
-
-VisualSection:Toggle({
-    Name = "Show Names",
-    Flag = "ShowNames",
-    Default = true,
-    Callback = function(Value)
-        print("Names:", Value)
-    end
-})
-
-VisualSection:Label("ESP Color"):Colorpicker({
-    Name = "ESP Color",
-    Flag = "ESPColor",
-    Default = Color3.fromRGB(255, 0, 0),
-    Callback = function(Color, Alpha)
-        print("ESP Color:", Color, "Alpha:", Alpha)
-    end
-})
-
-VisualSection:Slider({
-    Name = "Max Distance",
-    Flag = "MaxDistance",
-    Min = 100,
-    Max = 5000,
-    Default = 1000,
-    Decimals = 0,
-    Suffix = " studs",
-    Callback = function(Value)
-        print("Distance:", Value)
-    end
-})
-
-local WorldSection = VisualsPage:Section({
-    Name = "World",
-    Description = "World modifications",
-    Icon = Icons:GetIcon("globe", "Material"),
-    Side = 2
-})
-
-WorldSection:Toggle({
-    Name = "Full Bright",
-    Flag = "FullBright",
-    Default = false,
-    Callback = function(Value)
-        print("Full Bright:", Value)
-    end
-})
-
-WorldSection:Toggle({
-    Name = "No Fog",
-    Flag = "NoFog",
-    Default = false,
-    Callback = function(Value)
-        print("No Fog:", Value)
-    end
-})
-
-WorldSection:Button({
-    Name = "Reset World",
-    Icon = Icons:GetIcon("refresh", "Material"),
+Section1:Button({
+    Name = "Click Me",
     Callback = function()
-        print("Resetting world...")
+        print("Button pressed")
     end
 })
 
-WorldSection:Textbox({
-    Flag = "CustomCommand",
-    Placeholder = "Enter command...",
-    Default = "",
+Section1:Textbox({
+    Flag = "ExampleTextbox",
+    Default = "Hello",
+    Placeholder = "Type something...",
     Numeric = false,
     Finished = true,
-    Callback = function(Value)
-        print("Command:", Value)
+    Callback = function(Text)
+        print("Textbox input:", Text)
     end
 })
 
-local PlayerList = WorldSection:Listbox({
-    Name = "Player List",
-    Flag = "PlayerList",
-    Items = {"Player1", "Player2", "Player3", "Player4", "Player5"},
-    Default = "Player1",
-    Size = 150,
+Section1:Label("Color Picker Example"):Colorpicker({
+    Flag = "ExampleColor",
+    Default = Color3.fromRGB(255, 100, 100),
+    Callback = function(Color, Alpha)
+        print("Color chosen:", Color, Alpha)
+    end
+})
+
+local Page2 = Window:Page({
+    Name = "Advanced",
+    Icon = "122669828593160",
+    Columns = 1
+})
+
+local Section2 = Page2:Section({
+    Name = "Listbox & Multi",
+    Description = "Searchable multi‑selection",
+    Side = 1
+})
+
+Section2:Listbox({
+    Flag = "ExampleListbox",
+    Items = {"Apple", "Banana", "Cherry", "Date", "Elderberry"},
+    Default = "Cherry",
     Multi = false,
     Callback = function(Value)
-        print("Selected:", Value)
+        print("Listbox selected:", Value)
     end
 })
 
-Library:Notification({
-    Title = "Diamond Hub Loaded",
-    Description = "Script successfully initialized",
-    Duration = 5,
-    Icon = Icons.nebulaIcons.sparkle
+Section2:Listbox({
+    Flag = "ExampleMultiListbox",
+    Items = {"Red", "Green", "Blue", "Yellow", "Purple"},
+    Default = {"Red", "Blue"},
+    Multi = true,
+    Callback = function(Value)
+        print("Multi selection:", Value)
+    end
+})
+
+Section2:Slider({
+    Name = "Opacity",
+    Flag = "ExampleOpacity",
+    Min = 0,
+    Max = 1,
+    Default = 0.5,
+    Decimals = 2,
+    Suffix = "",
+    Callback = function(Value)
+        print("Opacity changed:", Value)
+    end
 })
 
 Window:Init()
-getgenv().Library = Library
